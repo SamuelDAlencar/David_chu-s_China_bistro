@@ -53,3 +53,45 @@ body {
 	vertical-align: middle;
 	font-weight: bold;
 }
+
+.navbar-dark .navbar-toggler {
+    color: rgb(0 0 0);
+    border-color: rgb(0 0 0);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgb(0 0 0);
+}
+
+.navbar-dark .navbar-nav #phone {
+	color: rgb(0 0 0);
+}
+
+#nav-list a {
+	color: #951C49;
+	text-align: center;
+}
+
+#nav-list a span {
+	font-size: 1.8em;
+}
+
+#phone {
+	margin-top: 5px;
+	margin-left: 15px;
+}
+
+#phone a {
+	text-align: right;
+	padding-bottom: 0;
+}
+
+#phone div {
+	color: #557c3e;
+	text-align: right;
+}
+
+#header-container {
+	margin-left: auto; 
+	margin-right: auto;
+}
