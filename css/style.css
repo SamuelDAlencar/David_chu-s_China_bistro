@@ -347,3 +347,25 @@ ul li a i {
 	box-shadow: 0 1px 5px 1px #f6b319;
 }
 
+#menu-tile {
+	background: url('../images/menu-tile.jpg') no-repeat;
+	background-position: center;
+}
+
+#specials-tile {
+	background: url('../images/specials-tile.jpg') no-repeat;
+	background-position: center;
+}
+
+#menu-tile span, #specials-tile span, #map-tile span {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 1.6em;
+	text-transform: uppercase;
+	background-color: #000;
+	color: #fff;
+	opacity: .8;
+}
