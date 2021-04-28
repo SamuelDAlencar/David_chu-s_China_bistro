@@ -136,6 +136,16 @@ ul li a i {
 		padding-left: 10px;
 		padding-right: 10px;
 	}
+
+	#specials-tile {
+  		width: 360px !important;
+  		margin: 0 auto 15px !important;
+  	}
+
+  	#menu-tile {
+  		width: 360px !important;
+  		margin: 15px auto 15px !important;
+  	}
 }
 
 @media (min-width: 577px) and (max-width: 767px) {
