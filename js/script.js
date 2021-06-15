@@ -26,16 +26,49 @@ $(document).ready(function () {
 		insertHtml(selector, html);
 	};
 
+	var insertProperty = function (string, propName, Propvalue) {
+		var propToReplace = "{{" + propName + "}}";
+		string = string
+		.replace(new RegExp(propToReplace, "g"), propValue);
+		return string;
+	}
+
 	document.addEventListener("DOMContentLoaded", function (event) {
 		showLoading("#main-content");
 		$ajaxUtils.sendGetRequest (
 			homeHtml,
 			function (responseText) {
 				document.querySelector("#main-content")
-					.innerHTML = responseText;
+				.innerHTML = responseText;
 			},
-			false);
+		false);
 	});
+
+	dc.loadMenuCategories = function () {
+		showLoading("#main-content");
+		$ajaxUtils.sendGetRequest(
+		allCategoriesUrl,buildAndShowCategoriesHTML);
+	};
+
+	function buildAndShowCategoriesHTML (categories) {
+
+	$ajaxUtils.sendGetRequest(
+		categoryHtml,
+		function (categoriesTitleHtml) {
+			$ajaxUtils.sendGetRequest(
+				categoryHtml,
+				function (categoryHtml) {
+			var categoriesViewHtml =
+			buildCategoriesViewHtml(categories, categoriesTitleHtml, categoryHtml);
+			insertHtml("#main-content", categoriesViewHtml);
+		},
+		false);
+	},
+	false);
+}
+
+function buildCategoriesView 
+
 	global.$dc = dc;
 })(window);
 
