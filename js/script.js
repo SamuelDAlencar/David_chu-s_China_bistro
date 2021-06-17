@@ -8,6 +8,7 @@ $(document).ready(function () {
 });
 
 (function (global) {
+
 	var dc = {};
 
 	var homeHtml = "snippets/home-snippet.html";
@@ -26,10 +27,9 @@ $(document).ready(function () {
 		insertHtml(selector, html);
 	};
 
-	var insertProperty = function (string, propName, Propvalue) {
+	var insertProperty = function (string, propName, propValue) {
 		var propToReplace = "{{" + propName + "}}";
-		string = string
-		.replace(new RegExp(propToReplace, "g"), propValue);
+		string = string.replace(new RegExp(propToReplace, "g"), propValue);
 		return string;
 	}
 
@@ -67,7 +67,22 @@ $(document).ready(function () {
 	false);
 }
 
-function buildCategoriesView 
+function buildCategoriesViewHtml(categories, categoriesTitleHtml, categoryHtml) {
+	var finalHtml = categoriesTitleHtml;
+	finalHtml += "<section class='row'>";
+
+	for (var i = 0; i < categories.length; i++) {
+		var html = categoryHtml;
+		var name = "" + categories[i].name;
+		var short_name = categories[i].short_name;
+		html = insertProperty(html, "name", name);
+		html = insertProperty(html, "short_name", short_name);
+		finalHtml += html;
+	}
+
+	finalHtml += "</section>";
+	return finalHtml;
+}
 
 	global.$dc = dc;
 })(window);
