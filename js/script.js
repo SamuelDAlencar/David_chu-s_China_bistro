@@ -15,6 +15,9 @@ $(document).ready(function () {
 	var allCategoriesUrl ="https://davids-restaurant.herokuapp.com/categories.json";
 	var categoriesTitleHtml = "snippets/categories-title-snippet.html";
 	var categoryHtml = "snippets/category-snippet.html";
+	var menuItemsUrl = "http://davids-restaurant.herokuapp.com/menu_items.json?category="
+	var menuItemsTitleHtml = "snippets/menu-items-title.html";
+	var menuItemHtml = "snippets/menu-items.html";
 
 	var insertHtml = function (selector, html) {
 		var targetElem = document.querySelector(selector);
@@ -50,10 +53,15 @@ $(document).ready(function () {
 		allCategoriesUrl,buildAndShowCategoriesHTML);
 	};
 
-	function buildAndShowCategoriesHTML (categories) {
+	dc.loadMenuItems = function (categoryShort) {
+		showLoading("#main-content");
+		$ajaxUtils.sendGetRequest(
+			menuItemsUrl + categoryShort, buildAndShowMenuItemsHTML);
+	};
 
+	function buildAndShowCategoriesHTML (categories) {
 	$ajaxUtils.sendGetRequest(
-		categoryHtml,
+		categoriesTitleHtml,
 		function (categoriesTitleHtml) {
 			$ajaxUtils.sendGetRequest(
 				categoryHtml,
@@ -80,6 +88,48 @@ function buildCategoriesViewHtml(categories, categoriesTitleHtml, categoryHtml) 
 		finalHtml += html;
 	}
 
+	finalHtml += "</section>";
+	return finalHtml;
+}
+
+function buildAndShowMenuItemsHTML (categoryMenuItems) {
+	$ajaxUtils.sendGetRequest (
+		menuItemsTitleHtml, function (menuItemsTitleHtml) {
+			$ajaxUtils.sendGetRequest (
+				menuItemHtml, function (menuItemHtml) {
+					var menuItemsViewHtml = buildMenuItemsViewHtml(categoryMenuItems, menuItemsTitleHtml, menuItemHtml);
+					insertHtml("#main-content", menuItemsViewHtml);
+				},
+			false);
+		},
+	false);
+}
+
+function buildMenuItemsViewHtml (categoryMenuItems, menuItemsTitleHtml, menuItemHtml) {
+	menuItemsTitleHtml = insertProperty (menuItemsTitleHtml, "name", categoryMenuItems.category.name);
+	menuItemsTitleHtml = insertProperty (menuItemsTitleHtml, "special_instructions", categoryMenuItems.category.special_instructions);
+
+	var finalHtml = menuItemsTitleHtml;
+	finalHtml += "<section class= 'row'>";
+
+	var menuItems = categoryMenuItems.menu_items;
+	var catShortName = categoryMenuItems.category.short_name;
+	for (var i = 0; i < menuItems.length; i++) {
+		var html = menuItemHtml;
+		html = insertProperty (html, "short_name", menuItems[i].short_name);
+		html = insertProperty (html, "catShortName" ,catShortName);
+		html = insertItemPrice (html, "price_small", menuItems[i].price_small);
+		html = insertItemPortionName (html, "small_portion_name", menuItems[i].small_portion_name);
+		html = insertItemPrice (html, "price_large", menuItems[i].price_large);
+		html = insertItemPortionName (html, "large_portion_name", menuItems[i].large_portion_name);
+		html = insertProperty (html, "name", menuItems[i].name);
+		html = insertProperty (html, "description", menuItems[i].description);
+
+		if (i % 2 != 0) {
+			html += "<div class='clearfix d-lg-block d-md-block'></div>"
+		}
+		finalHtml += html;
+	}
 	finalHtml += "</section>";
 	return finalHtml;
 }
